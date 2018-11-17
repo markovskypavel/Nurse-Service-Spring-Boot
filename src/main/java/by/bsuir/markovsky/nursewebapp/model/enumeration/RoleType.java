@@ -4,13 +4,13 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(name = "roleType")
 @XmlEnum
+@XmlType(name = "roleType")
 public enum RoleType {
-    @XmlEnumValue("ADMIN")
-    ADMIN,
-    @XmlEnumValue("NURSE")
-    NURSE,
-    @XmlEnumValue("USER")
-    USER
+    @XmlEnumValue("ROLE_ADMIN")
+    ROLE_ADMIN,
+    @XmlEnumValue("ROLE_NURSE")
+    ROLE_NURSE,
+    @XmlEnumValue("ROLE_USER")
+    ROLE_USER
 }

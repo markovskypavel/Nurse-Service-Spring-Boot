@@ -6,14 +6,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static by.bsuir.markovsky.nursewebapp.constant.MappingConstant.*;
 
 @Configuration
-@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -27,8 +25,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        // Setting Service to find User in the database.
-        // And Setting PassswordEncoder
+        auth.inMemoryAuthentication()
+                .withUser("admin")
+                .password("admin")
+                .roles("USER", "ADMIN", "NURSE");
+        // Setting Service to find User in the database. And Setting PassswordEncoder.
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
@@ -37,17 +38,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         // The pages does not require login
-        http.authorizeRequests().antMatchers(MAIN, ABOUT_US, SERVICE).permitAll();
+        http.authorizeRequests().antMatchers(HOME, ABOUT_US, LOGIN, DENIED, NOT_FOUND, REGISTRATION, ERROR, SERVICE, NURSE_REGISTRATION).permitAll();
+        //For authenticated users
+        http.authorizeRequests().antMatchers(SUBSCRIBE, UNSUBSCRIBE, LOGOUT).access("isAuthenticated()");
 
-        // /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
         // If no login, it will redirect to /login page.
+        // For USER only.
         http.authorizeRequests().antMatchers(USER).access("hasAnyRole('USER', 'ADMIN')");
 
-        // For ADMIN only.
-        http.authorizeRequests().antMatchers(ADMIN).access("hasRole('ADMIN')");
-
         // For NURSE only.
-        http.authorizeRequests().antMatchers(NURSE).access("hasRole('NURSE')");
+        http.authorizeRequests().antMatchers(NURSE, ADD_SERVICE, EDIT_SERVICE, DELETE_SERVICE, GET_SERVICE, GET_ALL_SERVICES).access("hasRole('NURSE')");
+
+        // For ADMIN only.
+        http.authorizeRequests().antMatchers(ADMIN, EDIT_SERVICE, DELETE_SERVICE, GET_SERVICE, GET_ALL_SERVICES,
+                ADD_NEWS, EDIT_NEWS, DELETE_NEWS, GET_NEWS, GET_ALL_NEWS).access("hasRole('ADMIN')");
 
         // When the user has logged in as XX.
         // But access a page that requires role YY,
@@ -58,13 +62,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().and().formLogin()
                 // Submit URL of login page.
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
-                .loginPage("/login")
-                .defaultSuccessUrl("/userAccountInfo")
-                .failureUrl("/login?error=true")
+                .loginPage(LOGIN)
+                .defaultSuccessUrl(HOME)
+                .failureUrl(LOGIN + ERROR_QUERY)
                 .usernameParameter("username")
                 .passwordParameter("password")
                 // Config for Logout Page
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
-
+                .and().logout().logoutUrl(LOGOUT).logoutSuccessUrl(HOME);
     }
+
 }

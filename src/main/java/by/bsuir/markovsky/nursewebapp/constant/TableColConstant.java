@@ -1,7 +1,6 @@
 package by.bsuir.markovsky.nursewebapp.constant;
 
 public interface TableColConstant {
-
     //News
     String NEWS_ID_COL = "news_id";
     String TITLE_COL = "title";

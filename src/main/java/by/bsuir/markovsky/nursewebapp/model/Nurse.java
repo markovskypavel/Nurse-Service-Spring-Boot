@@ -1,14 +1,22 @@
 package by.bsuir.markovsky.nursewebapp.model;
 
+import by.bsuir.markovsky.nursewebapp.constant.RegExConstant;
 import by.bsuir.markovsky.nursewebapp.model.enumeration.RatingType;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@ApiModel(description="Nurse")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @XmlRootElement(name = "Nurse")
-@XmlType(propOrder = {"experience","ratingType","webIdentity","responsibility"})
+@XmlType(propOrder = {"id","experience","ratingType","webIdentity","responsibility"})
 @XmlSeeAlso({WebIdentity.class, RatingType.class, Responsibility.class})
 @Entity
 @Table(name = "Nurse")
@@ -16,29 +24,31 @@ public class Nurse implements Serializable {
 
     private static final long serialVersionUID = 568107831573889513L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "nurse_id", unique = true, updatable = false)
     private int id;
 
+    @Pattern(regexp = RegExConstant.EXPERIENCE)
     @Column(name = "experience", nullable = false)
-    private int experience;
+    private String experience;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "rating")
-    private RatingType ratingType;
+    private RatingType ratingType = RatingType.THREE;
 
+    @Valid
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "webIdentity_id", nullable = false)
     private WebIdentity webIdentity;
 
+    @Valid
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "responsibility_id", nullable = false)
     private Responsibility responsibility;
 
     public Nurse() {
     }
-    public Nurse(int experience, RatingType ratingType, WebIdentity webIdentity, Responsibility responsibility) {
+    public Nurse(String experience, RatingType ratingType, WebIdentity webIdentity, Responsibility responsibility) {
         this.experience = experience;
         this.ratingType = ratingType;
         this.webIdentity = webIdentity;
@@ -55,7 +65,7 @@ public class Nurse implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    public void setExperience(int experience) {
+    public void setExperience(String experience) {
         this.experience = experience;
     }
     public void setRatingType(RatingType ratingType) {
@@ -69,12 +79,12 @@ public class Nurse implements Serializable {
     }
 
     //Getters
-    @XmlTransient
+    @XmlElement
     public int getId() {
         return id;
     }
     @XmlElement
-    public int getExperience() {
+    public String getExperience() {
         return experience;
     }
     @XmlElement(name = "ratingType")

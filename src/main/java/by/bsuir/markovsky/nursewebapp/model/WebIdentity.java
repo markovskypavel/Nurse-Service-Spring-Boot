@@ -1,14 +1,23 @@
 package by.bsuir.markovsky.nursewebapp.model;
 
+import by.bsuir.markovsky.nursewebapp.constant.RegExConstant;
 import by.bsuir.markovsky.nursewebapp.model.enumeration.RoleType;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@ApiModel(description="WebIdentity")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @XmlRootElement(name = "WebIdentity")
-@XmlType(propOrder = {"username","password","email","telephone","roleType","picture","address","identity"})
+@XmlType(propOrder = {"id","username","unencryptedPassword","password","email","telephone","roleType","picture","address","identity"})
 @XmlSeeAlso({Identity.class, RoleType.class})
 @Entity
 @Table(name = "WebIdentity")
@@ -16,42 +25,50 @@ public class WebIdentity implements Serializable {
 
     private static final long serialVersionUID = 3276480509050536113L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "webIdentity_id", unique = true, updatable = false)
     private int id;
 
+    @Pattern(regexp = RegExConstant.USERNAME)
     @Column(name = "username", nullable = false)
     private String username;
 
+    @Pattern(regexp = RegExConstant.PASSWORD)
+    private String unencryptedPassword;
+
+    @Size(min = 5)
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Pattern(regexp = RegExConstant.EMAIL)
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Pattern(regexp = RegExConstant.TELEPHONE_ALTERNATIVE)
     @Column(name = "telephone")
     private String telephone;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private RoleType roleType;
+    private RoleType roleType = RoleType.ROLE_ADMIN;
 
     @Column(name = "picture")
     private String picture;
 
+    @Pattern(regexp = RegExConstant.ADDRESS)
     @Column(name = "address", nullable = false)
     private String address;
 
+    @Valid
     @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinColumn(name = "identity_id", nullable = false)
-    private Identity identity;
+    private Identity identity = new Identity();
 
     public WebIdentity() {
     }
-    public WebIdentity(String username, String password, String email, String telephone, RoleType roleType, String picture, String address, Identity identity) {
+    public WebIdentity(String username, String unencryptedPassword, String email, String telephone, RoleType roleType, String picture, String address, Identity identity) {
         this.username = username;
-        this.password = password;
+        this.unencryptedPassword = unencryptedPassword;
         this.email = email;
         this.telephone = telephone;
         this.roleType = roleType;
@@ -61,7 +78,7 @@ public class WebIdentity implements Serializable {
     }
     public WebIdentity(WebIdentity webIdentity) {
         this.username = webIdentity.username;
-        this.password = webIdentity.password;
+        this.unencryptedPassword = webIdentity.unencryptedPassword;
         this.email = webIdentity.email;
         this.telephone = webIdentity.telephone;
         this.roleType = webIdentity.roleType;
@@ -76,6 +93,9 @@ public class WebIdentity implements Serializable {
     }
     public void setUsername(String username) {
         this.username = username;
+    }
+    public void setUnencryptedPassword(String unencryptedPassword) {
+        this.unencryptedPassword = unencryptedPassword;
     }
     public void setPassword(String password) {
         this.password = password;
@@ -100,13 +120,17 @@ public class WebIdentity implements Serializable {
     }
 
     //Getters
-    @XmlTransient
+    @XmlElement
     public int getId() {
         return id;
     }
     @XmlElement
     public String getUsername() {
         return username;
+    }
+    @XmlElement
+    public String getUnencryptedPassword() {
+        return unencryptedPassword;
     }
     @XmlElement
     public String getPassword() {
@@ -144,6 +168,7 @@ public class WebIdentity implements Serializable {
         WebIdentity that = (WebIdentity) o;
         return id == that.id &&
                 Objects.equals(username, that.username) &&
+                Objects.equals(unencryptedPassword, that.unencryptedPassword) &&
                 Objects.equals(password, that.password) &&
                 Objects.equals(email, that.email) &&
                 Objects.equals(telephone, that.telephone) &&
@@ -154,13 +179,14 @@ public class WebIdentity implements Serializable {
     }
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, email, telephone, roleType, picture, address, identity);
+        return Objects.hash(id, username, unencryptedPassword, password, email, telephone, roleType, picture, address, identity);
     }
     @Override
     public String toString() {
         return "WebIdentity{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
+                ", unencryptedPassword='" + unencryptedPassword + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", telephone='" + telephone + '\'' +

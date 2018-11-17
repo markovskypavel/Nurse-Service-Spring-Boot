@@ -1,6 +1,5 @@
 package by.bsuir.markovsky.nursewebapp.service;
 
-import by.bsuir.markovsky.nursewebapp.exception.NotFoundException;
 import by.bsuir.markovsky.nursewebapp.model.WebIdentity;
 import by.bsuir.markovsky.nursewebapp.repository.WebIdentityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,23 +29,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User " + userName + " was not found in the database");
         }
 
-/*        // [ROLE_USER, ROLE_ADMIN,..]
-        List<String> roleNames = this.appRoleDAO.getRoleNames(appUser.getUserId());
-
-        List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
-        if (roleNames != null) {
-            for (String role : roleNames) {
-                // ROLE_USER, ROLE_ADMIN,..
-                GrantedAuthority authority = new SimpleGrantedAuthority(role);
-                grantList.add(authority);
-            }
-        }*/
-
         List<GrantedAuthority> grantList = new ArrayList<>();
         GrantedAuthority authority = new SimpleGrantedAuthority(webIdentity.getRoleType().name());
         grantList.add(authority);
 
-        UserDetails userDetails = (UserDetails) new User(webIdentity.getUsername(), webIdentity.getPassword(), grantList);
+        UserDetails userDetails = new User(webIdentity.getUsername(), webIdentity.getPassword(), grantList);
 
         return userDetails;
     }

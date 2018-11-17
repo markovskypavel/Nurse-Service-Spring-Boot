@@ -1,15 +1,25 @@
 package by.bsuir.markovsky.nursewebapp.model;
 
 import by.bsuir.markovsky.nursewebapp.model.enumeration.NewsType;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.swagger.annotations.ApiModel;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.*;
+import javax.validation.Valid;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+@ApiModel(description="News")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @XmlRootElement(name = "News")
-@XmlType(propOrder = {"title","article","type","date","picture","webIdentity"})
+@XmlType(propOrder = {"id","title","article","type","date","picture","webIdentity"})
 @XmlSeeAlso({WebIdentity.class, NewsType.class})
 @Entity
 @Table(name = "News")
@@ -17,8 +27,7 @@ public class News implements Serializable {
 
     private static final long serialVersionUID = -2618259653794795434L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "news_id", unique = true, updatable = false)
     private int id;
 
@@ -30,14 +39,16 @@ public class News implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
-    private NewsType type;
+    private NewsType type = NewsType.SERVICE;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "date", nullable = false)
-    private Date date;
+    private Date date = new Date();
 
     @Column(name = "picture")
     private String picture;
 
+    @Valid
     @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinColumn(name = "webIdentity_id", nullable = false)
     private WebIdentity webIdentity;
@@ -85,7 +96,7 @@ public class News implements Serializable {
     }
 
     //Getters
-    @XmlTransient
+    @XmlElement
     public int getId() {
         return id;
     }

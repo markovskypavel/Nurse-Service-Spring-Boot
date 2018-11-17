@@ -4,8 +4,8 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(name = "newsType")
 @XmlEnum
+@XmlType(name = "newsType")
 public enum NewsType {
     @XmlEnumValue("MEDICINE")
     MEDICINE,

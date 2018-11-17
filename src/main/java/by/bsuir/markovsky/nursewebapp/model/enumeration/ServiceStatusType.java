@@ -4,8 +4,8 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(name = "serviceStatusType")
 @XmlEnum
+@XmlType(name = "serviceStatusType")
 public enum ServiceStatusType {
     @XmlEnumValue("FREE")
     FREE,

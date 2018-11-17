@@ -1,6 +1,11 @@
 package by.bsuir.markovsky.nursewebapp.model;
 
+import by.bsuir.markovsky.nursewebapp.constant.RegExConstant;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -8,40 +13,45 @@ import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.Objects;
 
+@ApiModel(description="Identity")
 @XmlRootElement(name = "Identity")
-@XmlType(propOrder = {"name","surname","age"})
+@XmlType(propOrder = {"id","name","surname","age"})
 @Entity
 @Table(name = "Identity")
 public class Identity implements Serializable {
 
     private static final long serialVersionUID = -3354880957250012160L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "identity_id", unique = true, updatable = false)
     private int id;
 
+    @ApiModelProperty(value="Pavel")
+    @Pattern(regexp = RegExConstant.NAME)
     @Column(name = "name", nullable = false)
     private String name;
 
+    @ApiModelProperty(value="Markovsky")
+    @Pattern(regexp = RegExConstant.SURNAME)
     @Column(name = "surname")
     private String surname;
 
+    @Pattern(regexp = RegExConstant.AGE)
     @Column(name = "age")
-    private int age;
+    private String age;
 
     public Identity() {
     }
     public Identity(int id) {
         this.id = id;
     }
-    public Identity(int id, String name, String surname, int age) {
+    public Identity(int id, String name, String surname, String age) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.age = age;
     }
-    public Identity(String name, String surname, int age) {
+    public Identity(String name, String surname, String age) {
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -62,12 +72,12 @@ public class Identity implements Serializable {
     public void setSurname(String surname) {
         this.surname = surname;
     }
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
     //Getters
-    @XmlTransient
+    @XmlElement
     public int getId() {
         return id;
     }
@@ -80,7 +90,7 @@ public class Identity implements Serializable {
         return surname;
     }
     @XmlElement
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div class="reg" th:fragment="register">
+    <h2>Регистрация</h2>
+    <form name='regForm' th:action="@{/register}" th:object="${webIdentity}" method='POST'>
+        <input type="text" name="username" th:field="*{username}" placeholder="логин" required/></br>
+        <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</span>
+        <input type="text" name="password" th:field="*{password}" placeholder="пароль" required/></br>
+        <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</span>
+        <input type="text" name="email" th:field="*{email}" placeholder="эл.почта" required/></br>
+        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</span>
+        <input type="text" name="address" th:field="*{address}" placeholder="адрес" required/></br>
+        <span class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address error</span>
+        <input type="text" name="name" th:field="*{identity.name}" placeholder="имя" required/></br>
+        <span class="error" th:if="${#fields.hasErrors('identity.name')}" th:errors="*{identity.name}">Name error</span>
+        <span class="error" th:if="${#request.getParameter('error') == 'true'}">Пользователь уже существует</span>
+        <input type="submit" name="action" value="Сервис"></br>
+        <input type="submit" name="action" value="Пользователь">
+    </form>
+</div>
+</html>

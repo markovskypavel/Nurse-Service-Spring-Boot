@@ -1,6 +1,12 @@
 package by.bsuir.markovsky.nursewebapp.model;
 
+import by.bsuir.markovsky.nursewebapp.constant.RegExConstant;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.swagger.annotations.ApiModel;
+
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -8,19 +14,21 @@ import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.Objects;
 
+@ApiModel(description="Responsibility")
 @XmlRootElement(name = "Responsibility")
-@XmlType(propOrder = {"name"})
+@XmlType(propOrder = {"id","name"})
 @Entity
 @Table(name = "Responsibility")
 public class Responsibility implements Serializable {
 
     private static final long serialVersionUID = -5791649674467717879L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "responsibility_id", unique = true, updatable = false)
     private int id;
-    @Column(name = "name", unique = true)
+
+    @Pattern(regexp = RegExConstant.UNIQUE_NAME)
+    @Column(name = "name", nullable = false)
     private String name;
 
     public Responsibility() {
@@ -41,7 +49,7 @@ public class Responsibility implements Serializable {
     }
 
     //Getters
-    @XmlTransient
+    @XmlElement
     public int getId() {
         return id;
     }

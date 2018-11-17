@@ -4,8 +4,8 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(name = "ratingType")
 @XmlEnum
+@XmlType(name = "ratingType")
 public enum RatingType {
     @XmlEnumValue("FIVE")
     FIVE,

@@ -1,15 +1,25 @@
 package by.bsuir.markovsky.nursewebapp.model;
 
 import by.bsuir.markovsky.nursewebapp.model.enumeration.ServiceStatusType;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.swagger.annotations.ApiModel;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.*;
+import javax.validation.Valid;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+@ApiModel(description="NurseOrder")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @XmlRootElement(name = "NurseOrder")
-@XmlType(propOrder = {"expireDate","description","status","nurse","webIdentity"})
+@XmlType(propOrder = {"id","expireDate","description","status","nurse","webIdentity"})
 @XmlSeeAlso({WebIdentity.class, Nurse.class, ServiceStatusType.class})
 @Entity
 @Table(name = "NurseOrder")
@@ -17,11 +27,11 @@ public class NurseOrder implements Serializable {
 
     private static final long serialVersionUID = -9166808964898547686L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "nurseOrder_id", unique = true, updatable = false)
     private int id;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "expireDate", nullable = false)
     private Date expireDate;
 
@@ -30,12 +40,14 @@ public class NurseOrder implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private ServiceStatusType status;
+    private ServiceStatusType status = ServiceStatusType.FREE;
 
+    @Valid
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "nurse_id", nullable = false)
     private Nurse nurse;
 
+    @Valid
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "webIdentity_id", nullable = false)
     private WebIdentity webIdentity;
@@ -78,7 +90,7 @@ public class NurseOrder implements Serializable {
     }
 
     //Getters
-    @XmlTransient
+    @XmlElement
     public int getId() {
         return id;
     }
