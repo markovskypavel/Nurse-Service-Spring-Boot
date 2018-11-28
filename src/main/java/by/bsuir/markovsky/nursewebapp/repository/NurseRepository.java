@@ -10,5 +10,5 @@ import java.util.List;
 @Repository("nurseRepository")
 public interface NurseRepository extends CrudRepository<Nurse, Integer> {
     List<Nurse> findAll();
-    List<Nurse> findAllByWebIdentity_username(String username);
+    Nurse findByWebIdentity_username(String username);
 }

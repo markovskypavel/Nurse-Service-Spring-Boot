@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div id="home" th:fragment="homeload">
+    <div class="content" th:if="${news.isEmpty()}">
+        <p>Новости отсутствуют</p>
+    </div>
+
+    <div class="content" th:each="onenews : ${news}">
+        <h2 th:utext="'<u>' + ${onenews.type} + '</u>: ' + ${onenews.title}"></h2>
+        <p th:utext="'<u>Дата</u>: ' + ${#dates.format(onenews.date, 'dd-MM-yyyy')}"></p>
+        <p th:utext="${#strings.substring(onenews.article, 0, 5)} + '...'"></p>
+        <div class="contentWork">
+            <input type="button" name="more" th:value="Читать" th:attr="data-url=@{/news/__${onenews.id}__}">
+        </div>
+    </div>
+</div>
+</html>

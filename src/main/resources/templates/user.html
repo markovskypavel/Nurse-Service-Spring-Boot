@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="ru"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header (requireData = @{/js/user})"></head>
 <body>
-
+<div id="wrapper">
+    <div lang="ru" th:replace="fragments/navigation :: navigation"></div>
+    <div id="user"></div>
+    <div lang="ru" th:replace="fragments/footer :: footer"></div>
+    <!--TODO: Long request(30sec) для уведомлений-->
+</div>
 </body>
 </html>

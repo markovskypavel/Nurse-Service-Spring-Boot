@@ -12,8 +12,8 @@ import java.util.List;
 @Repository("nurseOrderRepository")
 public interface NurseOrderRepository extends CrudRepository<NurseOrder, Integer> {
     List<NurseOrder> findAll();
-    /*@Query("select a from Activity a join a.users u where u.username in :username ORDER BY id ASC")*/
     List<NurseOrder> findAllByWebIdentity_username(String username);
+    List<NurseOrder> findAllByNurse_webIdentity_username(String username);
     List<NurseOrder> findAllByStatus(ServiceStatusType type);
     List<NurseOrder> findAllByNurse_ratingType(RatingType type);
 }

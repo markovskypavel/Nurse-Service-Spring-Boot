@@ -48,30 +48,27 @@ public class UserDetailsController {
     }
 
     @RequestMapping(value = MappingConstant.REGISTRATION, method = RequestMethod.POST)
-    public String registrationUser(@Valid @ModelAttribute(value = "webIdentity") WebIdentity webIdentity,
-                               BindingResult bindingResult) {
+    public String registrationUser(@Valid @ModelAttribute(value = "webIdentity") WebIdentity webIdentity, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return HTMLConstant.REGISTRATION_PAGE;
         }
-        if (webIdentityService.getUserByUsername(webIdentity.getUsername()) != null) {
+        if (nurseService.checkUserExists(webIdentity.getUsername())) {
             return "redirect:" + MappingConstant.REGISTRATION + MappingConstant.ERROR_QUERY;
         }
         webIdentityService.addOrUpdateWebIdentity(webIdentity);
-        return HTMLConstant.LOGIN_PAGE;
+        return "redirect:" + HTMLConstant.LOGIN_PAGE;
     }
 
     @RequestMapping(value = MappingConstant.NURSE_REGISTRATION, method = RequestMethod.POST)
-    public String registrationNurse(@Valid @ModelAttribute(value = "nurse") Nurse nurse,
-                               BindingResult bindingResult, HttpServletRequest req) {
-        /*req.getParameter("");*/
+    public String registrationNurse(@Valid @ModelAttribute(value = "nurse") Nurse nurse, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return HTMLConstant.NURSE_REGISTRATION_PAGE;
         }
-        if (webIdentityService.getUserByUsername(nurse.getWebIdentity().getUsername()) != null) {
+        if (nurseService.checkUserExists(nurse.getWebIdentity().getUsername())) {
             return "redirect:" + MappingConstant.NURSE_REGISTRATION + MappingConstant.ERROR_QUERY;
         }
         nurseService.addOrUpdateNurse(nurse);
-        return HTMLConstant.LOGIN_PAGE;
+        return "redirect:" + HTMLConstant.LOGIN_PAGE;
     }
 
 }

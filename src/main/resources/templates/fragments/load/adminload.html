@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div id="admin" th:fragment="adminload">
+
+    <aside>
+        <div class="contentWork">
+            <a th:href="@{/news/add}">Добавить новость</a>
+        </div>
+
+        <div class="content" th:if="${news.isEmpty()}">
+            <p>Новости отсутствуют</p>
+        </div>
+
+        <div class="content" th:each="onenews : ${news}">
+            <h2 th:utext="'<u>' + ${onenews.type} + '</u>: ' + ${onenews.title}"></h2>
+            <p th:utext="'<u>Дата</u>: ' + ${#dates.format(onenews.date, 'dd-MM-yyyy')}"></p>
+            <p th:utext="${#strings.substring(onenews.article, 0, 5)} + '...'"></p>
+            <div class="contentWork">
+                <input type="button" name="more" th:value="Читать" th:attr="data-url=@{/news/__${onenews.id}__}">
+
+                <div class="dropdown">
+                    <input type="button" class="dropbtn" name="dropbtnnews" value="Действия">
+                    <div id="dropdownNews" class="dropdown-content">
+                        <input type="button" name="deleteNews" th:value="Удалить" th:attr="data-url=@{/news/__${onenews.id}__/delete}">
+                        <input type="button" name="editNews" th:value="Редактировать" th:attr="data-url=@{/news/__${onenews.id}__/edit}">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </aside>
+
+    <section class="adminSection">
+
+        <div class="content" th:if="${orders.isEmpty()}">
+            <p>Заказы отсутствуют</p>
+        </div>
+
+        <div class="content" th:each="order : ${orders}">
+            <h2 th:utext="'<u>' + ${order.nurse.responsibility.name} + '</u>: ' + ${order.nurse.webIdentity.identity.name}"></h2>
+            <p th:utext="'<u>Дата окнончания</u>: ' + ${#dates.format(order.expireDate, 'dd-MM-yyyy')}"></p>
+            <p th:utext="'<u>Опыт</u>: ' + ${order.nurse.experience}"></p>
+            <div class="contentWork">
+                <input type="button" name="more" th:value="Подробнее" th:attr="data-url=@{/services/__${order.id}__}">
+
+                <div class="dropdown">
+                    <input type="button" class="dropbtn" name="dropbtnservice" value="Действия">
+                    <div id="dropdownService" class="dropdown-content">
+                        <input type="button" name="deleteService" th:value="Удалить" th:attr="data-url=@{/services/__${order.id}__/delete}">
+                        <input type="button" name="editService" th:value="Редактировать" th:attr="data-url=@{/services/__${order.id}__/edit}">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+</div>
+</html>

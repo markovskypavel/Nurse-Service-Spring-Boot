@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div id="nurse" th:fragment="nurseload">
+    <section class="contentUserSection">
+
+        <div class="contentWork">
+            <a th:href="@{/services/add}">Добавить услугу</a>
+        </div>
+
+        <div class="content" th:if="${orders.isEmpty()}">
+            <p>Заказы отсутствуют</p>
+        </div>
+        <div class="content" th:each="order : ${orders}">
+            <h2 th:utext="'<u>' + ${order.nurse.responsibility.name} + '</u>: ' + ${order.nurse.webIdentity.identity.name}"></h2>
+            <p th:utext="'<u>Дата окнончания</u>: ' + ${#dates.format(order.expireDate, 'dd-MM-yyyy')}"></p>
+            <p th:utext="'<u>Опыт</u>: ' + ${order.nurse.experience}"></p>
+            <div class="contentWork">
+                <input type="button" name="more" th:value="Подробнее" th:attr="data-url=@{/services/__${order.id}__}">
+                <input type="button" name="unsubscribe" th:value="Отменить"
+                       th:attr="data-url=@{/services/__${order.id}__/users/__${#authentication.getPrincipal().getUsername()}__/unsubscribe}">
+            </div>
+        </div>
+    </section>
+</div>
+</html>

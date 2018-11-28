@@ -24,8 +24,20 @@ public class NewsService {
     @Qualifier("newsRepository")
     private NewsRepository newsRepository;
 
-    public void addOrUpdateNews(News news) {
+    public void addNews(News news) {
         newsRepository.save(news);
+    }
+    public void updateNews(News news) {
+        News oldNews = getNewsById(news.getId());
+        if(news != null){
+            oldNews.setArticle(news.getArticle());
+            oldNews.setDate(news.getDate());
+            oldNews.setPicture(news.getPicture());
+            oldNews.setTitle(news.getTitle());
+            oldNews.setType(news.getType());
+
+            newsRepository.save(oldNews);
+        }
     }
     public void deleteNews(News news) {
         newsRepository.delete(news);

@@ -15,7 +15,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @ApiModel(description="WebIdentity")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+/*@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")*/
 @XmlRootElement(name = "WebIdentity")
 @XmlType(propOrder = {"id","username","unencryptedPassword","password","email","telephone","roleType","picture","address","identity"})
 @XmlSeeAlso({Identity.class, RoleType.class})
@@ -33,6 +33,7 @@ public class WebIdentity implements Serializable {
     @Column(name = "username", nullable = false)
     private String username;
 
+    @Transient
     @Pattern(regexp = RegExConstant.PASSWORD)
     private String unencryptedPassword;
 

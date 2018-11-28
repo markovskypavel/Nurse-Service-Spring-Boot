@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @ApiModel(description="Nurse")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+/*@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")*/
 @XmlRootElement(name = "Nurse")
 @XmlType(propOrder = {"id","experience","ratingType","webIdentity","responsibility"})
 @XmlSeeAlso({WebIdentity.class, RatingType.class, Responsibility.class})

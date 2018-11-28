@@ -1,6 +1,7 @@
 package by.bsuir.markovsky.nursewebapp.controller;
 
 import by.bsuir.markovsky.nursewebapp.constant.HTMLConstant;
+import by.bsuir.markovsky.nursewebapp.exception.LimitException;
 import by.bsuir.markovsky.nursewebapp.exception.NotFoundException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,6 +23,13 @@ public class ExceptionController {
     public ModelAndView handleException(HttpServletResponse response) {
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         return new ModelAndView(HTMLConstant.ERROR_PAGE);
+    }
+
+    @ExceptionHandler(LimitException.class)
+    @ResponseBody
+    public LimitException handleLimitException(HttpServletResponse response, LimitException le) {
+        response.setStatus(HttpStatus.I_AM_A_TEAPOT.value());
+        return le;
     }
 
     @ExceptionHandler(NotFoundException.class)

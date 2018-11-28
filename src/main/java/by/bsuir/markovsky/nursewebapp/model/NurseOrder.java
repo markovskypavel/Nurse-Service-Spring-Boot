@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @ApiModel(description="NurseOrder")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+/*@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")*/
 @XmlRootElement(name = "NurseOrder")
 @XmlType(propOrder = {"id","expireDate","description","status","nurse","webIdentity"})
 @XmlSeeAlso({WebIdentity.class, Nurse.class, ServiceStatusType.class})
@@ -43,12 +43,12 @@ public class NurseOrder implements Serializable {
     private ServiceStatusType status = ServiceStatusType.FREE;
 
     @Valid
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST})
     @JoinColumn(name = "nurse_id", nullable = false)
     private Nurse nurse;
 
     @Valid
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST})
     @JoinColumn(name = "webIdentity_id", nullable = false)
     private WebIdentity webIdentity;
 

@@ -19,6 +19,7 @@
             <a th:href="@{/admin}" sec:authorize="hasRole('ADMIN')">КАБИНЕТ</a>
             <a th:href="@{/nurse}" sec:authorize="hasRole('NURSE')">КАБИНЕТ</a>
             <a th:href="@{/user}" sec:authorize="hasRole('USER')">КАБИНЕТ</a>
+            <a th:href="@{/logout}" sec:authorize="isAuthenticated()">ВЫХОД</a>
         </div>
     </div>
     <div id="social">

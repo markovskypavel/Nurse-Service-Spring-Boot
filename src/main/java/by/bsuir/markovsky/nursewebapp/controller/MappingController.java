@@ -19,17 +19,8 @@ import java.security.Principal;
 @Controller
 public class MappingController {
 
-    @Autowired
-    @Qualifier("newsService")
-    private NewsService newsService;
-
-    @Autowired
-    @Qualifier("nurseOrderService")
-    private NurseOrderService nurseOrderService;
-
     @RequestMapping(value = MappingConstant.HOME, method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView home(Model model) {
-        model.addAttribute("news", newsService.getAllNews());
+    public ModelAndView home() {
         return new ModelAndView(HTMLConstant.HOME_PAGE);
     }
 
@@ -39,29 +30,22 @@ public class MappingController {
     }
 
     @RequestMapping(value = MappingConstant.SERVICE, method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView service(Model model) {
-        model.addAttribute("orders", nurseOrderService.getAllOrders());
+    public ModelAndView service() {
         return new ModelAndView(HTMLConstant.SERVICE_PAGE);
     }
 
     @RequestMapping(value = MappingConstant.ADMIN, method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView admin(Model model) {
-        model.addAttribute("news", newsService.getAllNews());
-        model.addAttribute("orders", nurseOrderService.getAllOrders());
+    public ModelAndView admin() {
         return new ModelAndView(HTMLConstant.ADMIN_PAGE);
     }
 
     @RequestMapping(value = MappingConstant.USER, method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView user(Principal principal, Model model) {
-        User loginedUser = (User) ((Authentication) principal).getPrincipal();
-        model.addAttribute("orders", nurseOrderService.getAllOrdersByUsername(loginedUser.getUsername()));
+    public ModelAndView user() {
         return new ModelAndView(HTMLConstant.USER_PAGE);
     }
 
     @RequestMapping(value = MappingConstant.NURSE, method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView nurse(Principal principal, Model model) {
-        User loginedUser = (User) ((Authentication) principal).getPrincipal();
-        model.addAttribute("orders", nurseOrderService.getAllOrdersByUsername(loginedUser.getUsername()));
+    public ModelAndView nurse() {
         return new ModelAndView(HTMLConstant.NURSE_PAGE);
     }
 

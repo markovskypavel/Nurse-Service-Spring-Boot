@@ -1,7 +1,6 @@
 package by.bsuir.markovsky.nursewebapp.constant;
 
 public interface MappingConstant {
-    /*    localhost:(Port number) /project name/(request mapping at controller) /(request mapping at method)*/
     String HOME = "/";
     String ABOUT_US = "/about";
     String SERVICE = "/service";
@@ -38,4 +37,11 @@ public interface MappingConstant {
     String NOT_FOUND = "/404";
     String ERROR = "/error";
     String ERROR_QUERY = "?error=true";
+
+    //Data load routing
+    String LOAD_DATA_HOME = "/load/home";
+    String LOAD_DATA_ADMIN = "/load/admin";
+    String LOAD_DATA_USER = "/load/user";
+    String LOAD_DATA_NURSE = "/load/nurse";
+    String LOAD_DATA_SERVICE = "/load/service";
 }

@@ -25,4 +25,11 @@ public interface HTMLConstant {
     String DENIED_PAGE = "errorpages/403page";
     String NOT_FOUND_PAGE = "errorpages/404page";
     String ERROR_PAGE = "error";
+
+    //Load fragments
+    String HOME_FRAGMENT = "fragments/load/homeload :: homeload";
+    String ADMIN_FRAGMENT = "fragments/load/adminload :: adminload";
+    String USER_FRAGMENT = "fragments/load/userload :: userload";
+    String NURSE_FRAGMENT = "fragments/load/nurseload :: nurseload";
+    String SERVICE_FRAGMENT = "fragments/load/serviceload :: serviceload";
 }
