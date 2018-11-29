@@ -14,6 +14,8 @@ define("request", ['jquery'], function ($) {
                 .then(function (response) {
                     if (response.status === 404) {
                         location.href = $('#contextPathHolder').data("contextpath") + '404';
+                    } else if (response.status === 403) {
+                        location.href = $('#contextPathHolder').data("contextpath") + '403';
                     } else if (response.status === 500) {
                         location.href = $('#contextPathHolder').data("contextpath") + 'error';
                     } else if (response.status === 418) {

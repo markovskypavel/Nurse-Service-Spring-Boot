@@ -139,7 +139,7 @@ p {
 /* Сводка, которая остается на месте при прокрутке */
 .news-aside {
     position: fixed;
-    width: 240px;
+    width: 250px;
 }
 
 /* Дата новостей */
@@ -536,7 +536,7 @@ a:hover {
 }
 /* Кнопка подтверждения для авторизации/регистрации */
 .auth INPUT[type ="submit"], .reg INPUT[type ="submit"], .auth INPUT[type ="button"], INPUT[type ="button"] {
-    width: 200px;
+    width: 150px;
     height: 30px;
     padding: 3px;
     margin: 10px 0 0 0;

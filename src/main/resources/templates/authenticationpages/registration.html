@@ -8,15 +8,15 @@
     <div class="reg">
         <h2>Регистрация</h2>
         <form name='regForm' th:action="@{/users/registration}" th:object="${webIdentity}" method='POST'>
-            <label for="username">Логин</label>
+            <label for="username">Логин*</label>
             <input type="text" id="username" name="username" th:field="*{username}" placeholder="логин*" required/>
             <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</span>
 
-            <label for="password">Пароль</label>
+            <label for="password">Пароль*</label>
             <input type="text" id="password" name="password" th:field="*{unencryptedPassword}" placeholder="пароль*" required/>
             <span class="error" th:if="${#fields.hasErrors('unencryptedPassword')}" th:errors="*{unencryptedPassword}">Password error</span>
 
-            <label for="email">Эл.почта</label>
+            <label for="email">Эл.почта*</label>
             <input type="email" id="email" name="email" th:field="*{email}" placeholder="эл.почта*" required/>
             <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</span>
 
@@ -24,11 +24,11 @@
             <input type="text" id="telephone" name="telephone" th:field="*{telephone}" placeholder="телефон"/>
             <span class="error" th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}">Telephone error</span>
 
-            <label for="address">Адрес</label>
+            <label for="address">Адрес*</label>
             <input type="text" id="address" name="address" th:field="*{address}" placeholder="адрес*"/>
             <span class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address error</span>
 
-            <label for="name">Имя</label>
+            <label for="name">Имя*</label>
             <input type="text" id="name" name="name" th:field="*{identity.name}" placeholder="имя*" required/>
             <span class="error" th:if="${#fields.hasErrors('identity.name')}" th:errors="*{identity.name}">Name error</span>
 

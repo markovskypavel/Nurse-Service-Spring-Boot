@@ -10,7 +10,7 @@
         <div class="content" th:each="order : ${orders}">
             <h2 th:utext="'<u>' + ${order.nurse.responsibility.name} + '</u>: ' + ${order.nurse.webIdentity.identity.name}"></h2>
             <p th:utext="'<u>Дата окнончания</u>: ' + ${#dates.format(order.expireDate, 'dd-MM-yyyy')}"></p>
-            <p th:utext="'<u>Опыт</u>: ' + ${order.nurse.rating}"></p>
+            <p th:utext="'<u>Опыт</u>: ' + ${order.nurse.experience}"></p>
             <div class="contentWork">
                 <input type="button" name="more" th:value="Подробнее" th:attr="data-url=@{/services/__${order.id}__}">
                 <input type="button" name="unsubscribe" th:value="Отменить"

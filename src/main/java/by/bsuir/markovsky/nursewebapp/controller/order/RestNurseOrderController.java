@@ -61,7 +61,7 @@ public class RestNurseOrderController {
             throw new NotFoundException();
         }
         nurseOrderService.subscribeUser(order, user);
-        emailService.sendEmail(user.getEmail(), "Поздравляем", "Вы успешно оформили заказ на услугу: "
+        emailService.sendEmail(user.getEmail(), "Заказ услуги", "Вы успешно оформили заказ к исполнителю "
                 + order.getNurse().getWebIdentity().getIdentity().getName());
     }
 

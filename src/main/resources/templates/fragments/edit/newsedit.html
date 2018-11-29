@@ -15,15 +15,15 @@
             <option value="OTHER">Другое
         </select>
 
-        <label for="title">Заголовок</label>
+        <label for="title">Заголовок*</label>
         <input type="text" id="title" name="title" th:field="*{title}" placeholder="заголовок*" required/>
         <span class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</span>
 
-        <label for="date">Дата</label>
+        <label for="date">Дата*</label>
         <input type="date" id="date" name="date" th:field="*{date}" placeholder="дата*" required/>
         <span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date error</span>
 
-        <label for="article">Новость</label>
+        <label for="article">Новость*</label>
         <textarea name="article" id="article" th:field="*{article}" placeholder="новость*" required></textarea>
         <span class="error" th:if="${#fields.hasErrors('article')}" th:errors="*{article}">Article error</span>
 

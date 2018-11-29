@@ -47,8 +47,7 @@ public class NurseOrderController {
         model.addAttribute("order", order);
         return new ModelAndView(HTMLConstant.SERVICE_PAGE_EDIT);
     }
-
-    //Params необходим для определения конкретной кнопки
+    
     @RequestMapping(value = MappingConstant.ADD_SERVICE, method = RequestMethod.POST, params = "add")
     public String addOrder(@Valid @ModelAttribute(value = "order") NurseOrder order,
                            BindingResult bindingResult, Principal principal) throws NotFoundException {

@@ -39,8 +39,8 @@ public class NurseOrderService {
         nurseOrderRepository.delete(nurseOrder);
     }
     public NurseOrder getOrderById(int id) {
-        Optional<NurseOrder> activity = nurseOrderRepository.findById(id);
-        return activity.orElse(null);
+        Optional<NurseOrder> order = nurseOrderRepository.findById(id);
+        return order.orElse(null);
     }
     public List<NurseOrder> getAllOrders() {
         return nurseOrderRepository.findAll();

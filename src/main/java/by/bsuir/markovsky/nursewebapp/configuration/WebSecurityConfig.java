@@ -46,20 +46,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         // The pages does not require login
-        http.authorizeRequests().antMatchers(HOME, ABOUT_US, LOGIN, DENIED, NOT_FOUND, REGISTRATION, ERROR, SERVICE, NURSE_REGISTRATION, LOAD_DATA_HOME, LOAD_DATA_SERVICE).permitAll();
+        http.authorizeRequests().antMatchers(HOME, ABOUT_US, LOGIN, DENIED, NOT_FOUND, REGISTRATION,
+                ERROR, SERVICE, NURSE_REGISTRATION, LOAD_DATA_HOME, LOAD_DATA_SERVICE, GET_NEWS,
+                GET_ALL_NEWS, GET_SERVICE, GET_ALL_SERVICES).permitAll();
         //For authenticated users
         http.authorizeRequests().antMatchers(LOGOUT).access("isAuthenticated()");
+
+        //For any of NURSE and ADMIN roles.
+        http.authorizeRequests().antMatchers(DELETE_SERVICE, EDIT_SERVICE).access("hasAnyRole('NURSE', 'ADMIN')");
 
         // If no login, it will redirect to /login page.
         // For USER only.
         http.authorizeRequests().antMatchers(USER, SUBSCRIBE, UNSUBSCRIBE, LOAD_DATA_USER).access("hasAnyRole('USER')");
 
         // For NURSE only.
-        http.authorizeRequests().antMatchers(NURSE, ADD_SERVICE, EDIT_SERVICE, DELETE_SERVICE, GET_SERVICE, GET_ALL_SERVICES, LOAD_DATA_NURSE).access("hasRole('NURSE')");
+        http.authorizeRequests().antMatchers(NURSE, ADD_SERVICE, LOAD_DATA_NURSE).access("hasRole('NURSE')");
 
         // For ADMIN only.
-        http.authorizeRequests().antMatchers(ADMIN, EDIT_SERVICE, DELETE_SERVICE, GET_SERVICE, GET_ALL_SERVICES,
-                ADD_NEWS, EDIT_NEWS, DELETE_NEWS, GET_NEWS, GET_ALL_NEWS, LOAD_DATA_ADMIN).access("hasRole('ADMIN')");
+        http.authorizeRequests().antMatchers(ADMIN, ADD_NEWS, EDIT_NEWS, DELETE_NEWS, LOAD_DATA_ADMIN).access("hasRole('ADMIN')");
 
         // When the user has logged in as XX.
         // But access a page that requires role YY,

@@ -33,7 +33,7 @@ public class NurseOrder implements Serializable {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "expireDate", nullable = false)
-    private Date expireDate;
+    private Date expireDate = new Date();
 
     @Column(name = "description", nullable = false)
     private String description;
@@ -49,7 +49,7 @@ public class NurseOrder implements Serializable {
 
     @Valid
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST})
-    @JoinColumn(name = "webIdentity_id", nullable = false)
+    @JoinColumn(name = "webIdentity_id")
     private WebIdentity webIdentity;
 
     public NurseOrder() {

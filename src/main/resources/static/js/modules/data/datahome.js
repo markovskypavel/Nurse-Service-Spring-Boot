@@ -3,18 +3,13 @@ define("datahome", ['jquery', 'request', 'dataview'], function ($, request, data
     return function loadAllHome() {
         $('#home')
             .load($('#contextPathHolder').data("contextpath") + 'load/home', function () {
-                /* Вывод информации о событиях в модальное окно + анимация затемнения */
+                /* Вывод информации о новостях в модальное окно + анимация затемнения */
                 $('input[name=more]').on("click", function () {
                     const url = $(this).data("url");
-                    request.getFetch(url, dataview.showActivity)
-                });
-
-                /* Подписка/отписка пользователя */
-                $('input[name=subscribe], input[name=unsubscribe]').on("click", function () {
-                    const url = $(this).data("url");
-                    request.postFetch(url, loadAllHome);
+                    request.getFetch(url, dataview.showNews)
                 });
             });
-    }
+    };
 
 });
+

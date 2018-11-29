@@ -8,15 +8,15 @@
     <div class="reg">
         <h2>Регистрация</h2>
         <form name='regForm' th:action="@{/users/nurseregistration}" th:object="${nurse}" method='POST'>
-            <label for="username">Логин</label>
+            <label for="username">Логин*</label>
             <input type="text" id="username" name="username" th:field="*{webIdentity.username}" placeholder="логин*" required/>
             <span class="error" th:if="${#fields.hasErrors('webIdentity.username')}" th:errors="*{webIdentity.username}">Username error</span>
 
-            <label for="password">Пароль</label>
+            <label for="password">Пароль*</label>
             <input type="text" id="password" name="password" th:field="*{webIdentity.unencryptedPassword}" placeholder="пароль*" required/>
             <span class="error" th:if="${#fields.hasErrors('webIdentity.unencryptedPassword')}" th:errors="*{webIdentity.unencryptedPassword}">Password error</span>
 
-            <label for="email">Эл.почта</label>
+            <label for="email">Эл.почта*</label>
             <input type="email" id="email" name="email" th:field="*{webIdentity.email}" placeholder="эл.почта*" required/>
             <span class="error" th:if="${#fields.hasErrors('webIdentity.email')}" th:errors="*{webIdentity.email}">Email error</span>
 
@@ -24,11 +24,11 @@
             <input type="text" id="telephone" name="telephone" th:field="*{webIdentity.telephone}" placeholder="телефон"/>
             <span class="error" th:if="${#fields.hasErrors('webIdentity.telephone')}" th:errors="*{webIdentity.telephone}">Telephone error</span>
 
-            <label for="address">Адрес</label>
+            <label for="address">Адрес*</label>
             <input type="text" id="address" name="address" th:field="*{webIdentity.address}" placeholder="адрес*"/>
             <span class="error" th:if="${#fields.hasErrors('webIdentity.address')}" th:errors="*{webIdentity.address}">Address error</span>
 
-            <label for="name">Имя</label>
+            <label for="name">Имя*</label>
             <input type="text" id="name" name="name" th:field="*{webIdentity.identity.name}" placeholder="имя*" required/>
             <span class="error" th:if="${#fields.hasErrors('webIdentity.identity.name')}" th:errors="*{webIdentity.identity.name}">Name error</span>
 
@@ -45,11 +45,11 @@
             <input type="number" id="age" name="age" th:field="*{webIdentity.identity.age}" placeholder="возраст"/>
             <span class="error" th:if="${#fields.hasErrors('webIdentity.identity.age')}" th:errors="*{webIdentity.identity.age}">Age error</span>
 
-            <label for="experience">Опыт</label>
+            <label for="experience">Опыт*</label>
             <input type="number" id="experience" name="experience" th:field="*{experience}" placeholder="опыт*" required/>
             <span class="error" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}">Experience error</span>
 
-            <label for="responsibility">Обязанность</label>
+            <label for="responsibility">Обязанность*</label>
             <input type="text" id="responsibility" name="responsibility" th:field="*{responsibility.name}" placeholder="обязанность*" required/>
             <span class="error" th:if="${#fields.hasErrors('responsibility.name')}" th:errors="*{responsibility.name}">Responsibility error</span>
 

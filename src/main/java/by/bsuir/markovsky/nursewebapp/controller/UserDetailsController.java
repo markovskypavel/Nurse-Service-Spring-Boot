@@ -52,11 +52,11 @@ public class UserDetailsController {
         if (bindingResult.hasErrors()) {
             return HTMLConstant.REGISTRATION_PAGE;
         }
-        if (nurseService.checkUserExists(webIdentity.getUsername())) {
+        if (webIdentityService.checkUserExists(webIdentity.getUsername())) {
             return "redirect:" + MappingConstant.REGISTRATION + MappingConstant.ERROR_QUERY;
         }
         webIdentityService.addOrUpdateWebIdentity(webIdentity);
-        return "redirect:" + HTMLConstant.LOGIN_PAGE;
+        return "redirect:" + MappingConstant.LOGIN;
     }
 
     @RequestMapping(value = MappingConstant.NURSE_REGISTRATION, method = RequestMethod.POST)
@@ -68,7 +68,7 @@ public class UserDetailsController {
             return "redirect:" + MappingConstant.NURSE_REGISTRATION + MappingConstant.ERROR_QUERY;
         }
         nurseService.addOrUpdateNurse(nurse);
-        return "redirect:" + HTMLConstant.LOGIN_PAGE;
+        return "redirect:" + MappingConstant.LOGIN;
     }
 
 }

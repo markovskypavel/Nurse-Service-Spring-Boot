@@ -8,11 +8,11 @@
         <input type="hidden" th:name="${action}">
         <input type="hidden" th:field="${order.id}">
 
-        <label for="expireDate">Дата окончания</label>
-        <input type="date" id="expireDate" name="expireDate" th:field="*{expireDate}" placeholder="дата*" required/>
+        <label for="expireDate">Дата окончания*</label>
+        <input type="date" id="expireDate" name="expireDate" th:field="*{expireDate}" placeholder="дата окнончания*" required/>
         <span class="error" th:if="${#fields.hasErrors('expireDate')}" th:errors="*{expireDate}">Expire date error</span>
 
-        <label for="description">Описание</label>
+        <label for="description">Описание*</label>
         <textarea name="description" id="description" th:field="*{description}" placeholder="описание*" required></textarea>
         <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description error</span>
 
